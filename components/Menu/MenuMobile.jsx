@@ -1,19 +1,29 @@
 import { Popover, PopoverButton, PopoverPanel, Transition, TransitionChild } from "@headlessui/react";
 import Image from "next/image";
-import { Fragment, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import Menu from "./Menu";
+import openMenu from '@/public/images/icon-hamburger.svg';
+import closeMenu from '@/public/images/icon-close.svg';
 
 const MenuMobile = () => {
 
 	const [isOpen, setIsOpen] = useState(false);
 
-	const handleOpenClick = () => {
-		setIsOpen(true);
-	};
+	useEffect(() => {
+		if (isOpen) {
+			document.body.classList.add('no-scroll');
+		} else {
+			document.body.classList.remove('no-scroll');
+		}
+	}, [isOpen]);
 
-	const handleCloseClick = () => {
+	const handleOpenClick = useCallback(() => {
+		setIsOpen(true);
+	},[]);
+
+	const handleCloseClick = useCallback(() => {
 		setIsOpen(false);
-	};
+	}, []);
 
 	return (
 
@@ -32,7 +42,7 @@ const MenuMobile = () => {
 							alt="hamburger menu"
 							width={32}
 							height={32}
-							src={"/images/icon-close.svg"}
+							src={closeMenu}
 						/>
 					</PopoverButton>
 				) :
@@ -45,7 +55,7 @@ const MenuMobile = () => {
 							alt="hamburger menu"
 							width={32}
 							height={32}
-							src={"/images/icon-hamburger.svg"}
+							src={openMenu}
 						/>
 					</PopoverButton>
 				)}
@@ -63,7 +73,7 @@ const MenuMobile = () => {
 
 				<PopoverPanel
 					as="div"
-					className={`absolute inset-0 -translate-y-20 overflow-y-scroll -z-5 w-full h-svh pb-10 border border-white flex bg-black`}
+					className={`absolute inset-0 -top-20 overflow-y-scroll -z-5 w-full h-svh py-10 flex bg-violet-950`}
 				>
 					<div className="m-auto">
 						<Menu />
@@ -73,7 +83,11 @@ const MenuMobile = () => {
 
 			</Transition >
 
-
+			<style jsx global>{`
+				body.no-scroll {
+					overflow: hidden;
+				}
+			`}</style>
 
 		</Popover>
 

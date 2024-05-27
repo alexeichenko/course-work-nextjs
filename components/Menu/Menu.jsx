@@ -39,6 +39,7 @@ const Menu = () => {
 					className="font-semibold text-white"
 				>
 					<Link
+						className="relative after:block after:absolute after:inset-0 after:m-auto after:top-8 after:left-0 after:w-0 after:h-0.5 after:rounded-lg after:bg-white after:transition-all hover:after:w-7"
 						href={item.href}
 					>{item.name}</Link>
 				</li>
